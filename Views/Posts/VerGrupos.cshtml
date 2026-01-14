@@ -1,0 +1,27 @@
+﻿@model List<TrabalhoLab.Models.Posts>
+
+@{
+    var nomeDoGrupo = ViewBag.NomeDoGrupo;
+    var IdGrupo = ViewBag.GrupoId;
+
+}
+
+<h2>Posts for Group: @nomeDoGrupo</h2>
+
+<a asp-controller="Posts" asp-action="Create" asp-route-gruposId="@ViewBag.GrupoId">Criar Novo Post</a>
+
+
+@if (Model != null && Model.Any())
+{
+    foreach (var post in Model)
+    {
+        <div>
+            <h4>@post.NomeCriadorPost</h4>
+            <p>@post.Texto</p>
+        </div>
+    }
+}
+else
+{
+    <p>No posts available for this group.</p>
+}

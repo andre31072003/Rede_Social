@@ -1,0 +1,78 @@
+﻿@model TrabalhoLab.Models.Perfil
+
+<style>
+    .edit-profile-container {
+        display: flex;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .profile-pic-section {
+        margin-right: 20px;
+    }
+
+    .profile-picture {
+        width: 150px; /* Adjust as necessary */
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid white; /* Optional: adds white border around the image */
+    }
+
+    .user-info-section {
+        flex-grow: 1;
+    }
+
+    .form-group label {
+        display: block;
+    }
+
+    .btn-primary {
+        margin-top: 10px;
+    }
+</style>
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="edit-profile-container">
+    <div class="profile-pic-section">
+        @if (Model.FotoPerfil != null)
+        {
+            <img src="@Url.Content($"~/UploadsFolder/{Model.FotoPerfil}")" alt="Profile Picture" class="profile-picture" />
+        }
+        else
+        {
+            <img src="~/path/to/default/image.jpg" alt="Default Profile Picture" class="profile-picture" />
+        }
+    </div>
+    <div class="user-info-section">
+        <h1>Editar Perfil</h1>
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="FotoPerfil" class="control-label">Foto de perfil</label>
+                <input type="file" asp-for="FotoPerfil" class="form-control" />
+                <span asp-validation-for="FotoPerfil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label">Username</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <!-- Rest of your form fields -->
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,50 @@
+﻿@model TrabalhoLab.Models.Comenta
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Comenta</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdComentário" />
+            <div class="form-group">
+                <label asp-for="NomeAutorComentário" class="control-label"></label>
+                <input asp-for="NomeAutorComentário" class="form-control" />
+                <span asp-validation-for="NomeAutorComentário" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comentário" class="control-label"></label>
+                <input asp-for="Comentário" class="form-control" />
+                <span asp-validation-for="Comentário" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataComentario" class="control-label"></label>
+                <input asp-for="DataComentario" class="form-control" />
+                <span asp-validation-for="DataComentario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdPost" class="control-label"></label>
+                <input asp-for="IdPost" class="form-control" />
+                <span asp-validation-for="IdPost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

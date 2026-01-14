@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TrabalhoLab.Models.Comenta>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeAutorComentário)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comentário)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataComentario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeAutorComentário)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comentário)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataComentario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPost)
+            </td>
+            <td>
+               @if(User.Identity.Name == item.NomeAutorComentário)
+              {
+                <a asp-action="Delete" asp-route-id="@item.IdComentário">Delete</a>
+              }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
