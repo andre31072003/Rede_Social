@@ -1,0 +1,132 @@
+﻿@page
+@model RegisterModel
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 130vh;
+    }
+
+    .login-image-container {
+        width: 68%;
+        padding: 20px;
+        text-align: center;
+        margin-top: -200px;
+        margin-left: -300px;
+    }
+
+    .login-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .login-form-container {
+        width: 80%;
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin-top: -70px;
+        margin-left: 150px;
+    }
+
+    #registerSubmit {
+        background-color: #F0740C;
+        border-color: #F0740C;
+        color: #fff;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-md-6 login-image-container">
+        <section>
+            <img src="~/Imagens/ImagemLogin.png" alt="Imagem de Login" class="login-image img-fluid mt-3" />
+        </section>
+    </div>
+    <div class="col-md-6 mt-3 order-md-2">
+        <section class="login-form-container">
+            <h2>Cria uma nova conta.</h2>
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Nome" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.Nome">Nome</label>
+                    <span asp-validation-for="Input.Nome" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.UserName">UserName</label>
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.Email">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.DataNascimento" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.DataNascimento">DataNascimento</label>
+                    <span asp-validation-for="Input.DataNascimento" class="text-danger"></span>
+                </div>
+                <div class="form-check">
+                    <input asp-for="Input.Sexo" class="form-check-input" type="radio" value="Feminino" id="feminino" name="Input.Sexo">
+                    <label class="form-check-label" for="feminino">
+                        <i class="fas fa-venus"></i> Feminino
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input asp-for="Input.Sexo" class="form-check-input" type="radio" value="Masculino" id="masculino" name="Input.Sexo">
+                    <label class="form-check-label" for="masculino">
+                        <i class="fas fa-mars"></i> Masculino
+                    </label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.Password">Password</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.FotoPerfil" class="control-label">Foto de Perfil</label>
+                    <input asp-for="Input.FotoPerfil" type="file" class="form-control" />
+                    <span asp-validation-for="Input.FotoPerfil" class="text-danger"></span>
+                </div>
+
+                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            
+                <p>
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Já tens conta? Inicia Sessão!</a>
+                </p>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

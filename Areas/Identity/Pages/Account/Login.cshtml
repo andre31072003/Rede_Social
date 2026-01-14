@@ -1,0 +1,99 @@
+﻿@page
+@model LoginModel
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .row {
+        display: flex;
+        height: 130vh;
+    }
+
+    .login-image-container {
+        width: 68%;
+        padding: 20px;
+        text-align: center;
+        margin-top: -200px;
+        margin-left: -200px; 
+    }
+
+    .login-image {
+        width: 98%; 
+        height: auto;
+        object-fit: cover;
+    }
+
+    .login-form-container {
+        width: 70%;
+        background-color: #f0f0f0; 
+        padding: 20px; 
+        border-radius: 8px; 
+        text-align: center;
+        margin-top: -750px;
+        margin-left: 700px;
+    }
+
+    #login-submit {
+        background-color: #F0740C; 
+        border-color: #F0740C;
+        color: #fff; 
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-6 login-image-container">
+        <section>
+            <img src="~/Imagens/ImagemLogin.png" alt="Imagem de Login" class="login-image img-fluid mt-3" />
+        </section>
+    </div>
+    <div class="col-md-6 mt-3 order-md-2">
+        <section class="login-form-container">
+            <h2>Log In</h2>
+            <form id="account" method="post" class="mx-auto" style="max-width: 400px;">
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.UserName" class="form-label">UserName</label>
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.Password" class="form-label">Password</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="checkbox mb-3">
+                    <label asp-for="Input.RememberMe" class="form-label">
+                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                </div>
+                <div>
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Esqueceste-te da Password?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Não tens conta? Regista-te!</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar email de confirmação</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

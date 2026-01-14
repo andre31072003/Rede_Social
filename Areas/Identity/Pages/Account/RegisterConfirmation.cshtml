@@ -1,0 +1,46 @@
+﻿@page
+@model RegisterConfirmationModel
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    .login-image {
+        width: 50%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .login-image-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin-top: -100px;
+    }
+
+    .confirmation-text {
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+</style>
+
+@* <div class="login-image-container">
+    <section>
+        <img src="~/Imagens/ImagemEmail.png" alt="ImagemÉmail" class="login-image img-fluid mt-3" />
+        <h2>Verifica o teu endereço de email</h2>
+    </section>
+    <h2 class="confirmation-text">
+        Definiste o teu email como
+        <span id="registeredEmail" asp-validation-for="Input.Email"></span>
+        para a tua conta
+    </h2>
+</div> *@
+
+@* <script>
+    document.getElementById('registeredEmail').innerText = '@Model.Input.Email';
+</script> *@
