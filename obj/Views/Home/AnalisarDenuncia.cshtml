@@ -1,0 +1,25 @@
+﻿@model TrabalhoLab.Models.AnalisarDenunciaViewModel
+
+@{
+    ViewData["Title"] = "Analisar Denúncia";
+}
+
+<h1>Analisar Denúncia</h1>
+
+<h2>Dados do Post</h2>
+<p><strong>Nome do Criador:</strong> @Model.Post.NomeCriadorPost</p>
+<p><strong>Texto:</strong> @Model.Post.Texto</p>
+@if (!string.IsNullOrEmpty(Model.Post.FotoPublicacao))
+{
+    <p><strong>Foto:</strong></p>
+    <img src="item.Post.FotoPublicacao" alt="Foto do Post" />
+}
+<p><strong>Data do Post:</strong> @Model.Post.DataPost.ToString("dd/MM/yyyy")</p>
+
+<h2>Detalhes da Denúncia</h2>
+<p><strong>Motivo:</strong> @Model.Denuncia.Motivo</p>
+
+
+<input type="hidden" name="DenunciaId" value="@Model.Denuncia.Id" />
+<button type="submit" name="Decisao" value="Aprovado">Aprovar</button>
+<button type="submit" name="Decisao" value="Reprovado">Reprovar</button>

@@ -1,0 +1,46 @@
+﻿
+@model TrabalhoLab.Models.Denuncia
+
+<h1>Denunciar Post</h1>
+
+<form id="denunciaForm" asp-action="Denunciar" method="post">
+    <input type="hidden" asp-for="PostId" />
+
+    <div class="form-group">
+        <label asp-for="Motivo">Motivo da Denúncia:</label>
+        <textarea class="form-control" asp-for="Motivo" rows="3" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-danger">Enviar Denúncia</button>
+    </div>
+</form>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#denunciaForm").submit(function (e) {
+                e.preventDefault(); // Impede a submissão padrão do formulário
+
+                // Envie os dados do formulário usando Ajax
+                $.ajax({
+                    url: $(this).attr("action"),
+                    method: $(this).attr("method"),
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        // Redireciona para a página de índice
+                        window.location.replace('@Url.Action("Index", "Home")'); 
+
+                        // Exibe o pop-up de sucesso usando o Bootstrap Modal
+                        $("#denunciaModal").modal("show");
+                    },
+                    error: function (error) {
+                        console.error("Erro ao processar a denúncia:", error);
+                    }
+                });
+            });
+        });
+    </script>
+}
+

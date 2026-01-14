@@ -1,0 +1,147 @@
+﻿<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+@model IEnumerable<TrabalhoLab.Models.Posts>
+@using System.Linq;
+
+@* @{
+    var PostPublico = Model.Where(Posts => Posts.TipoPost == "Publico");
+} *@
+<style>
+    .sidebar {
+        background-color: #f0f0f0;
+        padding: 20px;
+        width: 412px;
+        height: 600px;
+        margin-top: -15px;
+        margin-left: -100px;
+    }
+
+    .btn-delete-post {
+        position: absolute;
+        top: 10px; /* Adjust these values to match the screenshot */
+        right: 10px; /* Adjust these values to match the screenshot */
+        padding: 5px 10px;
+        color: #fff;
+        background-color: #d11a2a;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .search-bar {
+        width: 380px;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+
+    .search-button {
+        padding: 8px;
+        box-sizing: border-box;
+        margin-left: 305px;
+        height: 45px;
+        display: inline-block;
+        vertical-align: top;
+        margin-top: -55px;
+    }
+
+    .profile-icon {
+        font-size: 24px;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+
+    .publications-section {
+        margin-left: 100px;
+        padding: 20px;
+    }
+
+    .publication-card {
+        margin-bottom: 20px;
+    }
+
+    .user-name {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+</style>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="sidebar">
+                <form>
+                    <input type="text" class="search-bar" placeholder="Pesquisar...">
+                    <button type="submit" asp-action="VerGrupos" class="btn btn-primary search-button">Procurar</button>
+                </form>
+
+                @* <img src="~/UploadsFolder/@Model.FotoPerfil" alt="Foto de Perfil" class="foto-perfil" /> *@
+
+                <i class="fas fa-user profile-icon "></i>
+                <span>@User.Identity.Name</span>
+
+                <p></p>
+                <a asp-controller="Posts" asp-action="Create" class="btn">
+                    <i class="fas fa-users profile-icon"></i>
+                </a>
+
+                <p></p>
+                <a href="/atividades" class="btn">
+                    <i class="fas fa-chart-line profile-icon"></i>
+                    <span class="activities-label">Atividades</span>
+                </a>
+                <p></p>
+                <a asp-controller="Grupos" asp-action="Index" class="btn">
+                    <i class="fas fa-users profile-icon"></i> Grupos
+                </a>
+
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Home/FeedSemConta">
+                    <button type="submit" class="nav-link btn btn-link text-dark">
+                        <i class="fas fa-sign-out-alt profile-icon"></i>
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="publications-section">
+                @foreach (var post in Model)
+                {
+                    <div class="publication-card card">
+                        <div class="card-body">
+                            <h2 class="post-name">@post.NomeCriadorPost</h2>
+                            @if (User.Identity.Name == post.NomeCriadorPost)
+                            {
+                                <a asp-action="Delete" asp-route-id="@post.PostId" class="btn-delete-post">
+                                    <i class="fas fa-trash"></i> Apagar
+                                </a>
+                            }
+                            <p class="card-text">@post.Texto</p>
+                            @if (!string.IsNullOrEmpty(post.FotoPublicacao))
+                            {
+                                <img src="@post.FotoPublicacao" class="card-img-top" alt="Post Image">
+                            }
+                            <p class="post-date">@post.DataPost.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                            <div class="post-actions">
+                                <a asp-controller="Comentarios" asp-action="Create" asp-route-idPost="@post.PostId" class="btn-action">
+                                    <i class="fas fa-comment"></i> Comentar
+                                </a>
+                                @* @if (User.Identity.Name != post.NomeCriadorPost)
+                            { *@
+                                <a asp-controller="Home" asp-action="Denunciar" asp-route-PostId="@post.PostId" class="btn btn-danger">
+                                    <i class="fas fa-exclamation-triangle"></i> Denunciar
+                                </a>
+                                @*  } *@
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

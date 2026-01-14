@@ -1,0 +1,120 @@
+﻿@model IEnumerable<TrabalhoLab.Models.Posts>
+@using System.Linq;
+
+<style>
+    .sidebar {
+        background-color: #D9D9D9;
+        padding: 20px;
+        width: 412px;
+        height: 600px;
+        margin-top: -15px;
+        margin-left: -100px;
+    }
+
+    .search-bar {
+        width: 380px;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+
+    .search-button {
+        padding: 8px;
+        box-sizing: border-box;
+        margin-left: 305px;
+        height: 45px;
+        display: inline-block;
+        vertical-align: top;
+        margin-top: -55px;
+    }
+
+    .friends-icon {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+
+    .activities-icon {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+
+    .publications-section {
+        margin-left: 100px;
+        padding: 20px;
+    }
+
+    .publication-card {
+        margin-bottom: 20px;
+    }
+
+    .user-name {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+   
+
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="sidebar">
+                <form>
+                    <input type="text" class="search-bar" placeholder="Pesquisar...">
+                    <button type="submit" class="btn btn-primary search-button">Procurar</button>
+                </form>
+
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Login
+                    </button>
+                </form>
+
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Registar
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Área de Publicações -->
+        <div class="col-md-9">
+            <div class="publications-section">
+                @foreach (var post in Model.Where(p => p.TipoPost == "Publico"))
+                {
+                    <div class="publication-card card">
+                        <div class="card-body">
+                            <h2 class="user-name">@post.NomeCriadorPost</h2>
+                            @if (User.Identity.Name == post.NomeCriadorPost)
+                            {
+                                <a asp-action="Delete" asp-route-id="@post.PostId" class="btn-delete-post">
+                                    <i class="fas fa-trash"></i> Apagar
+                                </a>
+                            }
+                            <p class="card-text">@post.Texto</p>
+                            @if (!string.IsNullOrEmpty(post.FotoPublicacao))
+                            {
+                                <img src="@post.FotoPublicacao" class="card-img-top" alt="Post Image">
+                            }
+                            <p class="post-date">@post.DataPost.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                            <div class="post-actions">
+                                <a asp-controller="Comentarios" asp-action="Create" asp-route-idPost="@post.PostId" class="btn-action">
+                                    <i class="fas fa-comment"></i> Comentar
+                                </a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

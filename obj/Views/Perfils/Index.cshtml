@@ -1,0 +1,135 @@
+﻿@* @model TrabalhoLab.Models.Perfil
+@model TrabalhoLab.Models.Posts
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userPerfil = Model; // Assuming Model is already the user's Perfil object
+}
+
+@if (userPerfil != null)
+{
+    <div class="user-profile-container">
+        <div class="profile-image-container">
+            @if (!string.IsNullOrEmpty(userPerfil.FotoPerfil))
+            {
+                <img src="@Url.Content($"~/UploadsFolder/{userPerfil.FotoPerfil}")" alt="Profile Picture" class="profile-image">
+            }
+            else
+            {
+                <p>No profile picture available.</p>
+            }
+        </div>
+        <div class="user-info-and-actions">
+            <div class="user-info">
+                <h2>@userPerfil.Nome</h2>
+                <p>@userPerfil.UserName</p>
+            </div>
+            <div class="profile-actions">
+                <a asp-action="AddStory" asp-route-id="@userPerfil.Id" class="btn btn-primary">Adicionar à história</a>
+                <a asp-action="Edit" asp-route-id="@userPerfil.Id" class="btn btn-secondary">Editar perfil</a>
+            </div>
+        </div>
+        <div class="user-posts-container">
+            <h3>Publicações</h3>
+            @foreach (var post in Model.Where(p => p.NomeCriadorPost == User.Identity.Name))
+            {
+                <div class="publication-card card">
+                    <div class="card-body">
+                        <h2 class="user-name">@post.NomeCriadorPost</h2>
+                        @if (User.Identity.Name == post.NomeCriadorPost)
+                        {
+                            <a asp-action="Delete" asp-route-id="@post.PostId" class="btn-delete-post">
+                                <i class="fas fa-trash"></i> Apagar
+                            </a>
+                        }
+                        <p class="card-text">@post.Texto</p>
+                        @if (!string.IsNullOrEmpty(post.FotoPublicacao))
+                        {
+                            <img src="@Url.Content($"~/UploadsFolder/{post.FotoPublicacao}")" class="card-img-top" alt="Post Image">
+                        }
+                        <p class="post-date">@post.DataPost.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                        <div class="post-actions">
+                            <a asp-controller="Comentarios" asp-action="Create" asp-route-idPost="@post.PostId" class="btn-action">
+                                <i class="fas fa-comment"></i> Comentar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+}
+
+<style>
+    .user-profile-container {
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 20px;
+        justify-content: space-between;
+    }
+
+    .profile-image-container {
+        flex-shrink: 0;
+    }
+    .user-posts-container {
+        margin-top: 20px;
+    }
+
+    .post {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .profile-image {
+        width: 150px; /* Adjust as necessary */
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid white; /* Optional: adds white border around the image */
+    }
+
+    .user-info-and-actions {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        justify-content: space-between;
+        padding-left: 20px; /* Adjust space between picture and name */
+    }
+
+    .user-info h2 {
+        margin: 0;
+        padding-right: 10px; /* Adjust as necessary */
+    }
+
+    .profile-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        border-radius: 4px;
+        color: white;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+</style>
+ *@

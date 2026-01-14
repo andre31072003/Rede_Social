@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TrabalhoLab.Models.Notificações>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Destinatario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mensagem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeSolicitador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GrupoId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destinatario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mensagem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeSolicitador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GrupoId)
+            </td>
+            <td>
+               <form asp-action="AceitarPedido" method="post">
+                    <input type="hidden" name="notificacaoId" value="@item.NotificacaoId" />
+                    <button type="submit">Aceitar</button>
+               </form>
+                <form asp-action="RecusarPedido" method="post">
+                        <input type="hidden" name="notificacaoId" value="@item.NotificacaoId" />
+                <button type="submit"> Recusar</button> 
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

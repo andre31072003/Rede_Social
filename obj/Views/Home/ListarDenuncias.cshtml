@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TrabalhoLab.Models.Denuncia>
+
+@{
+    ViewData["Title"] = "ListarDenuncias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ListarDenuncias</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PostId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                if (item != null)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PostId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Motivo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <a asp-action="AnalisarDenuncia"  class="btn btn-primary">Analisar</a>
+                        </td>
+                    </tr>
+                }
+            }
+
+        }
+        else
+        {
+        }
+    </tbody>
+</table>
